@@ -26,6 +26,8 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Navigation from './src/navigation';
 import { COLORS } from './src/constants';
+import { Provider } from 'react-redux';
+import { store } from './src/store';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -40,10 +42,12 @@ function App(): JSX.Element {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <StatusBar backgroundColor={COLORS.primary} />
-      <Navigation />
-    </View>
+    <Provider store={store}>
+      <View style={{ flex: 1 }}>
+        <StatusBar backgroundColor={COLORS.primary} />
+        <Navigation />
+      </View>
+    </Provider>
   );
 }
 

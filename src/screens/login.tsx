@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { COLORS, SIZES } from '../constants'
 import LoginTitle from '../components/LoginComponents/title/loginTitle'
 import LoginForm from '../components/LoginComponents/loginForm/loginForm'
+import LoaderComponent from '../components/loaderComponent/loaderComponent'
 
 const LoginScreen = () => {
     return (
