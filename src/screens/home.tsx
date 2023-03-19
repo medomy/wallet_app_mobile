@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, StatusBar } from 'react-native'
 import React, { useEffect } from 'react'
 import { COLORS } from '../constants'
 import { useFetchUserData } from '../hooks/useFetchUserData'
@@ -11,12 +11,16 @@ const HomeScreen = () => {
         console.log(loading)
     }, [loading])
     return (
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.screen}>
+        <>
+            <StatusBar backgroundColor={COLORS.tintColor} />
             {loading && <LoaderComponent />}
-            {user && <InfoPart user={user} />}
-        </ScrollView>
+            {!loading &&
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={styles.screen}>
+                    {user && <InfoPart user={user} />}
+                </ScrollView>}
+        </>
     )
 }
 

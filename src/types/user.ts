@@ -16,5 +16,6 @@ export type JwtPayload = {
 export type MobileNumUser = {
     name: string,
     mobileNumber: string,
-    profile: string
+    profile: string,
+    id: string
 }
