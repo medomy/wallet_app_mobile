@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { MobileNumUser, User } from "../types/user";
 import UserService from "../services/user/userService";
+import AsyncStorageCache from "../services/asyncStorageCache/asyncStorage";
 
 export function useFetchTransactedUsers(user: User | null) {
     const [transactedUsers, setTransactedUsers] = useState<(MobileNumUser | null)[]>([]);
     async function getData() {
-        if (user) {
+        if (user !== null) {
             try {
-                const users = await UserService.getRecentlyTransctedUsers(user.mobileNumber);
+                const token = await AsyncStorageCache.getUserAsyncStorage();
+                const users = await UserService.getRecentlyTransctedUsers(user.mobileNumber, token!);
                 setTransactedUsers(users);
             } catch (err: any) {
-                throw new Error(`${err.message}`);
+                console.warn(err.message);
             }
         }
     }

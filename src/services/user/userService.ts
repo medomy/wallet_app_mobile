@@ -34,24 +34,35 @@ class UserService {
             throw new Error(`${err.message}`)
         }
     }
-    static async getUserByMobile(mobile: string): Promise<MobileNumUser> {
+    static async getUserByMobile(mobile: string, token: string): Promise<MobileNumUser> {
         try {
-            const res = await instance.get(`/usersMobile/${mobile}`);
+            const res = await instance.get(`/usersMobile/${mobile}`, {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            });
+            console.log(res.data);
             if (res.data.error) throw new Error(res.data.error);
             return res.data;
         } catch (err: any) {
             throw new Error(err.message);
         }
     }
-    static async getRecentlyTransctedUsers(mobile: string): Promise<(MobileNumUser | null)[]> {
+    static async getRecentlyTransctedUsers(mobile: string, token: string): Promise<(MobileNumUser | null)[]> {
         try {
-            const Transres = await instance.get(`/transactionsMade/${mobile}`);
+            const Transres = await instance.get(`/transactionsMade/${mobile}`, {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            });
+            console.log(Transres.data);
             if (Transres.data.error) throw new Error(Transres.data.error);
             let transectedUsers: MobileNumUser[] = [];
             for (let i = 0; i < Transres.data.length; i++) {
-                const user = await this.getUserByMobile(Transres.data[i].toMobile);
+                const user = await this.getUserByMobile(Transres.data[i].toMobile, token);
                 transectedUsers.push(user);
             }
+            console.log(transectedUsers);
             return [null, ...transectedUsers];
         } catch (err: any) {
             throw new Error(err.message);

@@ -4,9 +4,12 @@ import { COLORS } from '../constants'
 import { useFetchUserData } from '../hooks/useFetchUserData'
 import LoaderComponent from '../components/loaderComponent/loaderComponent'
 import InfoPart from '../components/homeComponents/infoPart/infoPart'
+import { useFetchTransactedUsers } from '../hooks/useFetchTransactedUsers'
+import QuickSendList from '../components/homeComponents/quickSendList/quickSendList'
 
 const HomeScreen = () => {
     const { user, setRefreshed, loading, errMessage } = useFetchUserData();
+    const { transactedUsers } = useFetchTransactedUsers(user);
     useEffect(() => {
         console.log(loading)
     }, [loading])
@@ -19,6 +22,7 @@ const HomeScreen = () => {
                     showsVerticalScrollIndicator={false}
                     style={styles.screen}>
                     {user && <InfoPart user={user} />}
+                    {transactedUsers.length > 0 && <QuickSendList users={transactedUsers} />}
                 </ScrollView>}
         </>
     )
