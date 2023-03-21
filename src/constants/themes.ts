@@ -54,7 +54,8 @@ export const iconNamesFontAwsome5 = {
     eyeClosed: "eye-slash",
     back: "arrow-left",
     backspace: "backspace",
-    plus : "plus"
+    plus: "plus",
+    minus: "minus"
 
 }
 

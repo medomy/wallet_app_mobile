@@ -6,10 +6,11 @@ import LoaderComponent from '../components/loaderComponent/loaderComponent'
 import InfoPart from '../components/homeComponents/infoPart/infoPart'
 import { useFetchTransactedUsers } from '../hooks/useFetchTransactedUsers'
 import QuickSendList from '../components/homeComponents/quickSendList/quickSendList'
+import TransactionsSec from '../components/homeComponents/transactionsSec/transactionsSec'
 
 const HomeScreen = () => {
     const { user, setRefreshed, loading, errMessage } = useFetchUserData();
-    const { transactedUsers } = useFetchTransactedUsers(user);
+    const { transactedUsers, transactions } = useFetchTransactedUsers(user);
     useEffect(() => {
         console.log(loading)
     }, [loading])
@@ -23,6 +24,7 @@ const HomeScreen = () => {
                     style={styles.screen}>
                     {user && <InfoPart user={user} />}
                     {transactedUsers.length > 0 && <QuickSendList users={transactedUsers} />}
+                    <TransactionsSec transactions={transactions} />
                 </ScrollView>}
         </>
     )

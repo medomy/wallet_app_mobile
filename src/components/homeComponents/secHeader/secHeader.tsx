@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
     },
     txt: {
         ...FONTS.body4,
-        color: COLORS.offWhite
+        color: COLORS.darkgray
     }
 })
