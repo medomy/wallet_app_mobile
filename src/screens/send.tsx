@@ -7,6 +7,8 @@ import { RootStackParamList } from '../types/navigation'
 import TransactedUserCard from '../components/sendScreenCompnents/transactedUserCard/transactedUserCard'
 import TransactedUserForm from '../components/sendScreenCompnents/transactedUserForm/transactedUserForm'
 import { MobileNumUser, User } from '../types/user'
+import TransactedBalancePart from '../components/sendScreenCompnents/transactedBalance/transactedBalancePart'
+import NumPad from '../components/sendScreenCompnents/numPad/numPad'
 
 type SendScreenParamsType = RouteProp<RootStackParamList, "Send">
 const SendScreen = () => {
@@ -16,6 +18,15 @@ const SendScreen = () => {
         return route.params
     }, [route.params])
     const [screenUser, setScreenUser] = useState<User | MobileNumUser | null>(user);
+    const [sentMoney, setSentMoney] = useState<string>("");
+    const changeSentMoney = (val: string) => {
+        if (val !== "d") {
+            setSentMoney((prev) => prev += val);
+        }
+        else {
+            setSentMoney((prev) => prev.substring(0, prev.length - 1));
+        }
+    }
     return (
         <View style={styles.screen}>
             <SendHeader />
@@ -25,6 +36,8 @@ const SendScreen = () => {
                     setUserMobile(text);
                 },
             }} />}
+            <TransactedBalancePart money={sentMoney} />
+            <NumPad passVal={(val)=> changeSentMoney(val)}/>
         </View>
     )
 }
