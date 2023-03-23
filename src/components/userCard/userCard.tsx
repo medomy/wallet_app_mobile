@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
 import React from 'react'
 import { MobileNumUser, User } from '../../types/user'
 import { COLORS, FONTS, SIZES, iconNamesFontAwsome5 } from '../../constants'
@@ -7,16 +7,19 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 type props = {
     user: User | null | MobileNumUser,
     dim: number | string,
-    radius: number
+    radius: number,
+    btnProps : TouchableOpacityProps
 }
-const UserCard = ({ user, dim, radius }: props) => {
+const UserCard = ({ user, dim, radius , btnProps }: props) => {
     return (
         <>
             {user === null ? <TouchableOpacity
-                style={[styles.card, { backgroundColor: COLORS.offBlack, width: dim, height: dim, borderRadius: radius }]}>
+                style={[styles.card, { backgroundColor: COLORS.offBlack, width: dim, height: dim, borderRadius: radius }]}
+                {...btnProps}>
                 <Icon name={iconNamesFontAwsome5.plus} color={COLORS.white} size={SIZES.iconSize} />
             </TouchableOpacity> : <TouchableOpacity
                 style={[styles.card, { backgroundColor: COLORS.tintColor, width: dim, height: dim, borderRadius: radius }]}
+                {...btnProps}
             >
                 <Text style={styles.txt}>
                     {user.name.charAt(0)}

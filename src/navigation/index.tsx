@@ -8,9 +8,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useInitProgram } from '../hooks/useInitProgram';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { MobileNumUser, User } from '../types/user';
 
-
-const NavigationStack = createNativeStackNavigator();
+export type StackNavigatorScreensParams = {
+    Home: undefined,
+    Login: undefined,
+    Send: {
+        user: User | MobileNumUser | null
+    }
+}
+const NavigationStack = createNativeStackNavigator<StackNavigatorScreensParams>();
 const Navigation = () => {
     useInitProgram();
     const isSigned = useSelector((state: RootState) => state.user.isSigned);
@@ -21,9 +28,9 @@ const Navigation = () => {
                     headerShown: false
                 }
             )}>
-                <NavigationStack.Screen name='Home' component={HomeScreen} />
+                <NavigationStack.Screen name='Home' component={HomeScreen}/>
                 {!isSigned && <NavigationStack.Screen name='Login' component={LoginScreen} />}
-                <NavigationStack.Screen name='Send' component={SendScreen} />
+                <NavigationStack.Screen name='Send' component={SendScreen} initialParams={{ user: null }} />
             </NavigationStack.Navigator>
         </NavigationContainer>
     )

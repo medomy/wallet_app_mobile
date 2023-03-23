@@ -6,14 +6,20 @@ import UserCard from '../../userCard/userCard'
 import { SIZES } from '../../../constants'
 import SecHeader from '../secHeader/secHeader'
 import { FlatList } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 type props = {
     users: (User | MobileNumUser | null)[]
 }
 const QuickSendList = ({ users }: props) => {
+    const naviagtion = useNavigation();
     const listRenderer: ListRenderItem<User | MobileNumUser | null> = useCallback(({ item }) => {
         return (
-            <UserCard user={item} dim={80} radius={20} />
+            <UserCard user={item} dim={80} radius={20} btnProps={{
+                onPress: () => naviagtion.navigate("Send", {
+                    user: item
+                })
+            }} />
         )
     }, [users])
     return (

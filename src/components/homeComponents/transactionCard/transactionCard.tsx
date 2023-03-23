@@ -12,7 +12,7 @@ const TransactionCard = ({ transaction }: props) => {
     return (
         <TouchableOpacity style={styles.card}>
             <View style={styles.personalContainer}>
-                <UserCard user={transaction.transactedUser} dim={30} radius={8} />
+                <UserCard user={transaction.transactedUser} dim={30} radius={8} btnProps={{}} />
                 <View style={styles.personalInfo}>
                     <Text style={styles.name} numberOfLines={1}>
                         {transaction.transactedUser.name}
@@ -24,7 +24,7 @@ const TransactionCard = ({ transaction }: props) => {
             </View>
             <View style={styles.moneySec}>
                 <Icon name={transaction.recieved! ? iconNamesFontAwsome5.plus : iconNamesFontAwsome5.minus}
-                    size={0.75*SIZES.iconSize2}
+                    size={0.75 * SIZES.iconSize2}
                     color={COLORS.white}
                     style={styles.sign} />
                 <Icon name={iconNamesFontAwsome5.pound}
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginTop: 3 * SIZES.margin2,
-        marginLeft : 0.5 * SIZES.margin
+        marginLeft: 0.5 * SIZES.margin
     },
     sign: {
         marginRight: 0.7 * SIZES.margin

@@ -6,19 +6,23 @@ import InfoHeader from '../infoHeader/infoHeader'
 import BalanceSec from '../balanceSec/balanceSec'
 import { commonStyles } from '../commonStyles'
 import Btn2 from '../btn2/btn2'
+import { useNavigation } from '@react-navigation/native'
 
 type props = {
     user: User
 }
 const InfoPart = ({ user }: props) => {
     const btnWidth = useRef<number | string>("48%");
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <InfoHeader userName={user.name} />
             <BalanceSec balance={user.balance} />
             <View style={[styles.btnsWrap, commonStyles.row]}>
                 <Btn2 txt='request' txtColor={COLORS.white} bgColor={COLORS.primary} width={btnWidth.current} btnProps={{}} />
-                <Btn2 txt='send' txtColor={COLORS.primary} bgColor={COLORS.white} width={btnWidth.current} btnProps={{}} />
+                <Btn2 txt='send' txtColor={COLORS.primary} bgColor={COLORS.white} width={btnWidth.current} btnProps={{
+                    onPress: ()=> navigation.navigate("Send" , {user : null})
+                }} />
             </View>
         </View>
     )
