@@ -9,6 +9,7 @@ import TransactedUserForm from '../components/sendScreenCompnents/transactedUser
 import { MobileNumUser, User } from '../types/user'
 import TransactedBalancePart from '../components/sendScreenCompnents/transactedBalance/transactedBalancePart'
 import NumPad from '../components/sendScreenCompnents/numPad/numPad'
+import SwipeToSendSec from '../components/sendScreenCompnents/swipeToSendSec/swipeToSendSec'
 
 type SendScreenParamsType = RouteProp<RootStackParamList, "Send">
 const SendScreen = () => {
@@ -37,7 +38,8 @@ const SendScreen = () => {
                 },
             }} />}
             <TransactedBalancePart money={sentMoney} />
-            <NumPad passVal={(val)=> changeSentMoney(val)}/>
+            <NumPad passVal={(val) => changeSentMoney(val)} />
+            <SwipeToSendSec />
         </View>
     )
 }

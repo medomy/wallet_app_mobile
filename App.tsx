@@ -28,6 +28,7 @@ import Navigation from './src/navigation';
 import { COLORS } from './src/constants';
 import { Provider } from 'react-redux';
 import { store } from './src/store';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -42,12 +43,14 @@ function App(): JSX.Element {
   };
 
   return (
-    <Provider store={store}>
-      <View style={{ flex: 1 }}>
-        <StatusBar backgroundColor={COLORS.primary} />
-        <Navigation />
-      </View>
-    </Provider>
+    <GestureHandlerRootView style={{flex : 1}}>
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          <StatusBar backgroundColor={COLORS.primary} />
+          <Navigation />
+        </View>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }
 
