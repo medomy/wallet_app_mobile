@@ -3,10 +3,13 @@ import React from 'react'
 import { COLORS, FONTS, SIZES } from '../../../constants'
 import Swiper from './swiper'
 
-const SwipeToSendSec = () => {
+type props = {
+    showModal : (val : boolean)=> void,
+}
+const SwipeToSendSec = ({showModal} : props) => {
     return (
         <View style={styles.container}>
-            <Swiper />
+            <Swiper showModal={(val)=> showModal(val)}/>
             <Text style={styles.txt}>Swipe to send</Text>
         </View>
     )

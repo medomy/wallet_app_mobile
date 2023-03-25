@@ -2,14 +2,26 @@ import { StyleSheet, Text, View, Animated } from 'react-native'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { COLORS, SIZES, iconNamesMaterial } from '../../../constants'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { PanGestureHandler } from 'react-native-gesture-handler'
+import Animated1, { Easing, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
-const Swiper = () => {
+type props = {
+    showModal : (val : boolean)=> void,
+}
+const Swiper = ({showModal} : props) => {
     const opacities1 = useRef([1, 0.5, 0.25]);
     const opacities2 = useRef([0.5, 1, 0.25]);
     const opacities3 = useRef([0.25, 0.5, 1]);
     const opacity1 = useRef(new Animated.Value(opacities1.current[0])).current;
     const opacity2 = useRef(new Animated.Value(opacities2.current[0])).current;
     const opacity3 = useRef(new Animated.Value(opacities3.current[0])).current;
+    const trnsX = useSharedValue(4);
+    const swiperMovingStyle = useAnimatedStyle(() => (
+        {
+            //transform: [{ translateX: trnsX.value }],
+            left: withTiming(trnsX.value, { duration: 100, easing: Easing.linear })
+        }
+    ))
     const changeArrowsOpacity = useCallback(() => {
         let i = 0;
         return setInterval(() => {
@@ -33,22 +45,45 @@ const Swiper = () => {
         }, 400)
     }, []);
 
+    const swipeEvent = useAnimatedGestureHandler({
+        onStart: (event) => {
+            console.log("start");
+        },
+        onActive: (event) => {
+            console.log(event.absoluteX);
+            trnsX.value = event.absoluteX;
+        },
+        onEnd(event, context) {
+            //if (event.absoluteX > SIZES.fullScreenWidth - 100) trnsX.value = withTiming(4 , {duration : 400});
+            //console.log(event.absoluteX);
+            if(event.absoluteX >= (SIZES.fullScreenWidth / 2 - 20) || event.velocityX < -1500) runOnJS(showModal)(true);
+            else {
+                runOnJS(showModal)(false);
+            };
+            trnsX.value = withTiming(4 , {duration : 400});
+        },
+
+    })
+
     useEffect(() => {
+        console.log(SIZES.fullScreenWidth);
         const interval = changeArrowsOpacity();
         return () => clearInterval(interval);
     }, [])
     return (
-        <View style={styles.container}>
-            <Animated.View style={{ opacity: opacity1 }}>
-                <Icon name={iconNamesMaterial.arrowRight} size={0.75 * SIZES.iconSize2} color={COLORS.white} />
-            </Animated.View>
-            <Animated.View style={{ opacity: opacity2 }}>
-                <Icon name={iconNamesMaterial.arrowRight} size={0.75 * SIZES.iconSize2} color={COLORS.white} />
-            </Animated.View>
-            <Animated.View style={{ opacity: opacity3 }}>
-                <Icon name={iconNamesMaterial.arrowRight} size={0.75 * SIZES.iconSize2} color={COLORS.white} />
-            </Animated.View>
-        </View>
+        <PanGestureHandler onGestureEvent={swipeEvent}>
+            <Animated1.View style={[styles.container, swiperMovingStyle]}>
+                <Animated.View style={{ opacity: opacity1 }}>
+                    <Icon name={iconNamesMaterial.arrowRight} size={0.75 * SIZES.iconSize2} color={COLORS.white} />
+                </Animated.View>
+                <Animated.View style={{ opacity: opacity2 }}>
+                    <Icon name={iconNamesMaterial.arrowRight} size={0.75 * SIZES.iconSize2} color={COLORS.white} />
+                </Animated.View>
+                <Animated.View style={{ opacity: opacity3 }}>
+                    <Icon name={iconNamesMaterial.arrowRight} size={0.75 * SIZES.iconSize2} color={COLORS.white} />
+                </Animated.View>
+            </Animated1.View>
+        </PanGestureHandler>
     )
 }
 

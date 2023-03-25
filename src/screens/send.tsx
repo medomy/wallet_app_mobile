@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { COLORS } from '../constants'
 import SendHeader from '../components/sendScreenCompnents/sendHeader/sendHeader'
 import { RouteProp, useRoute } from '@react-navigation/native'
@@ -14,6 +14,7 @@ import SwipeToSendSec from '../components/sendScreenCompnents/swipeToSendSec/swi
 type SendScreenParamsType = RouteProp<RootStackParamList, "Send">
 const SendScreen = () => {
     const [userMobile, setUserMobile] = useState<string>("");
+    const [showModal , setShowModal] = useState<boolean>(false);
     const route = useRoute<SendScreenParamsType>();
     const { user } = useMemo(() => {
         return route.params
@@ -28,6 +29,9 @@ const SendScreen = () => {
             setSentMoney((prev) => prev.substring(0, prev.length - 1));
         }
     }
+    useEffect(()=>{
+        console.log("showModal" , showModal);
+    },[showModal])
     return (
         <View style={styles.screen}>
             <SendHeader />
@@ -39,7 +43,7 @@ const SendScreen = () => {
             }} />}
             <TransactedBalancePart money={sentMoney} />
             <NumPad passVal={(val) => changeSentMoney(val)} />
-            <SwipeToSendSec />
+            <SwipeToSendSec showModal={(val)=> setShowModal(val)}/>
         </View>
     )
 }
