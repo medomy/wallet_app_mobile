@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { MobileNumUser, User } from '../../types/user'
 
 
 interface UserSlice {
     userToken: string | null,
-    isSigned: boolean
+    isSigned: boolean,
+    user: User | MobileNumUser | null
 }
 
 const initialState: UserSlice = {
     userToken: null,
-    isSigned: false
+    isSigned: false,
+    user: null
 }
 
 const slice = createSlice({
@@ -19,9 +22,12 @@ const slice = createSlice({
         setUserToken: (state, payLoad: PayloadAction<string>) => {
             state.userToken = payLoad.payload;
             if (state.userToken !== null) state.isSigned = true;
+        },
+        setGlobalUser: (state, payload: PayloadAction<User | MobileNumUser | null>) => {
+            state.user = payload.payload;
         }
     }
 })
 
-export const { setUserToken } = slice.actions;
+export const { setUserToken, setGlobalUser } = slice.actions;
 export default slice.reducer;

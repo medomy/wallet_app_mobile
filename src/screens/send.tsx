@@ -10,11 +10,12 @@ import { MobileNumUser, User } from '../types/user'
 import TransactedBalancePart from '../components/sendScreenCompnents/transactedBalance/transactedBalancePart'
 import NumPad from '../components/sendScreenCompnents/numPad/numPad'
 import SwipeToSendSec from '../components/sendScreenCompnents/swipeToSendSec/swipeToSendSec'
+import TransactionModal from '../components/sendScreenCompnents/transactionModal/transactionModal'
 
 type SendScreenParamsType = RouteProp<RootStackParamList, "Send">
 const SendScreen = () => {
     const [userMobile, setUserMobile] = useState<string>("");
-    const [showModal , setShowModal] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
     const route = useRoute<SendScreenParamsType>();
     const { user } = useMemo(() => {
         return route.params
@@ -29,9 +30,9 @@ const SendScreen = () => {
             setSentMoney((prev) => prev.substring(0, prev.length - 1));
         }
     }
-    useEffect(()=>{
-        console.log("showModal" , showModal);
-    },[showModal])
+    useEffect(() => {
+        console.log("showModal", showModal);
+    }, [showModal])
     return (
         <View style={styles.screen}>
             <SendHeader />
@@ -43,7 +44,11 @@ const SendScreen = () => {
             }} />}
             <TransactedBalancePart money={sentMoney} />
             <NumPad passVal={(val) => changeSentMoney(val)} />
-            <SwipeToSendSec showModal={(val)=> setShowModal(val)}/>
+            <SwipeToSendSec showModal={(val) => setShowModal(val)} />
+            <TransactionModal visibleModal={showModal} closeModal={(val) => setShowModal(val)}
+                transactedMoney={Number(sentMoney)}
+                transactedUser={screenUser}
+                transactedMobile={userMobile} />
         </View>
     )
 }

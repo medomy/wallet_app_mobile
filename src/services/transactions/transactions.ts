@@ -21,7 +21,7 @@ class TransactionService {
             if (madeTransactionsRes.data.error) throw new Error(madeTransactionsRes.data.error);
             const recievedTransactions: Transaction[] = recievedTransactionsRes.data.map((trans: Transaction) => ({ ...trans, recieved: true }));
             const recievedTransactionsAppUsed: TransactionAppUsed[] = [];
-            for(let i =0 ; i < recievedTransactions.length ; i++){
+            for (let i = 0; i < recievedTransactions.length; i++) {
                 try {
                     const user = await UserService.getUserByMobile(recievedTransactions[i].fromMobile, token);
                     recievedTransactionsAppUsed.push({ ...recievedTransactions[i], transactedUser: user });
@@ -39,7 +39,7 @@ class TransactionService {
             // })
             const madeTransactions: Transaction[] = madeTransactionsRes.data.map((trans: Transaction) => ({ ...trans, recieved: false }));
             const madeTransactionsAppUsed: TransactionAppUsed[] = [];
-            for(let i =0 ; i <madeTransactions.length ; i++){
+            for (let i = 0; i < madeTransactions.length; i++) {
                 try {
                     const user = await UserService.getUserByMobile(madeTransactions[i].toMobile, token);
                     madeTransactionsAppUsed.push({ ...madeTransactions[i], transactedUser: user });
@@ -55,10 +55,28 @@ class TransactionService {
             //         throw new Error(err.message);
             //     }
             // })
-            console.log("transactions" , [...recievedTransactionsAppUsed, ...madeTransactionsAppUsed]);
+            console.log("transactions", [...recievedTransactionsAppUsed, ...madeTransactionsAppUsed]);
             return [...recievedTransactionsAppUsed, ...madeTransactionsAppUsed];
         } catch (err: any) {
             throw new Error(err.message);
+        }
+    }
+    static async makeTransaction(token: string, transaction: Transaction) {
+        try {
+            const res = await instance.post(`/transactions`, {
+                from: transaction.fromMobile,
+                to: transaction.toMobile,
+                date: transaction.createdAt,
+                money: transaction.money
+            }, {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            })
+            console.log(res);
+        } catch (err: any) {
+            const error = err as Error;
+            throw new Error(error.message);
         }
     }
 }

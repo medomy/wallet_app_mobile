@@ -55,7 +55,8 @@ export const iconNamesFontAwsome5 = {
     back: "arrow-left",
     backspace: "backspace",
     plus: "plus",
-    minus: "minus"
+    minus: "minus",
+    check: "check"
 
 }
 
