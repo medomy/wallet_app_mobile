@@ -60,7 +60,7 @@ class UserService {
             let transectedUsers: MobileNumUser[] = [];
             for (let i = 0; i < Transres.data.length; i++) {
                 const user = await this.getUserByMobile(Transres.data[i].toMobile, token);
-                transectedUsers.push(user);
+                if (transectedUsers.find((usr) => usr.id === user.id) === undefined) transectedUsers.push(user);
             }
             console.log(transectedUsers);
             return [null, ...transectedUsers];

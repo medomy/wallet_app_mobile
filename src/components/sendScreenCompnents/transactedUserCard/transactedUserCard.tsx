@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     cardContainer: {
         width: SIZES.fullWidth,
         paddingHorizontal: SIZES.padding2,
-        marginVertical: SIZES.margin
+        marginVertical: SIZES.margin,
     },
     card: {
         width: SIZES.fullWidth,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        borderRadius: SIZES.radius2
+        borderRadius: SIZES.radius2,
     },
     userPart: {
         flex: 0.8,

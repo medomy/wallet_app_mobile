@@ -63,6 +63,7 @@ class TransactionService {
     }
     static async makeTransaction(token: string, transaction: Transaction) {
         try {
+            console.log(transaction);
             const res = await instance.post(`/transactions`, {
                 from: transaction.fromMobile,
                 to: transaction.toMobile,
@@ -75,6 +76,7 @@ class TransactionService {
             })
             console.log(res);
         } catch (err: any) {
+            console.warn(err);
             const error = err as Error;
             throw new Error(error.message);
         }

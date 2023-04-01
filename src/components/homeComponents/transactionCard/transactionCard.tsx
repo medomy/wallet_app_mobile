@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: SIZES.padding,
         paddingVertical: SIZES.padding,
         justifyContent: "space-between",
-        width: "49%"
+        width: "49%",
+        marginVertical: SIZES.margin
     },
     personalContainer: {
         flexDirection: "row",

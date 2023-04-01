@@ -1,5 +1,5 @@
 import { ActivityIndicator, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { COLORS, FONTS, SIZES, iconNamesFontAwsome5, iconNamesIon } from '../../../constants';
 import { MobileNumUser, User } from '../../../types/user';
 import Btn1 from '../../btn1/btn1';
@@ -39,19 +39,27 @@ const TransactionModal = ({ visibleModal, closeModal, transactedUser, transacted
             setTransactionFailed(true);
             setTransactionError(err.message);
         }
-    }, [])
+    }, [transactedMoney, transactedUser, transactedMobile])
+    useEffect(() => {
+        console.log("transacted money from modal", transactedMoney);
+        setTransactionFailed(false);
+        setTransactionLoading(false);
+        setTransactionError("");
+        setTransactionSuccessful(false);
+    }, [visibleModal, transactedMoney])
     return (
         <Modal
             transparent
             visible={visibleModal}
             onRequestClose={() => closeModal(false)}
             animationType='slide'
+
         >
             <Pressable style={styles.transparentPart} onPress={() => closeModal(false)} />
             <View style={styles.modal}>
                 {!transactionSuccessful && !transactionFailed && !transactionLoading &&
                     <>
-                        <Text style={styles.sureTxt}>Send money to : </Text>
+                        <Text style={styles.sureTxt}>Send {transactedMoney} EGP to : </Text>
                         <Text style={styles.txt}>{transactedUser ? transactedUser.mobileNumber : transactedMobile!}</Text>
                         {transactedUser && <Text style={styles.txt}>{transactedUser.name}</Text>}
                         <View style={styles.btnWrap}>
@@ -88,16 +96,17 @@ export default TransactionModal
 
 const styles = StyleSheet.create({
     modal: {
-        borderTopRightRadius: SIZES.radius2,
-        borderTopLeftRadius: SIZES.radius2,
+        borderTopRightRadius: SIZES.radius,
+        borderTopLeftRadius: SIZES.radius,
         paddingHorizontal: SIZES.padding2,
         paddingVertical: SIZES.padding,
-        backgroundColor: COLORS.primary,
-        alignItems: "center"
+        backgroundColor: COLORS.offBlack,
+        alignItems: "center",
+        flex: 1
     },
     transparentPart: {
-        height: 0.75 * SIZES.fullScreenHeight,
-        color: COLORS.primary,
+        height: 0.65 * SIZES.fullScreenHeight,
+        color: COLORS.white,
         opacity: 0.25
     },
     sureTxt: {

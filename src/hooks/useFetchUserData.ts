@@ -7,7 +7,7 @@ import { setGlobalUser } from "../store/userSlice";
 
 export function useFetchUserData() {
     const [user, setUser] = useState<User | null>(null);
-    const [refreshed, setRefreshed] = useState<boolean>(false);
+    //const [refreshed, setRefreshed] = useState<boolean>(false);
     const [errMessage, setErrorMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const dispatch = useDispatch();
@@ -27,12 +27,12 @@ export function useFetchUserData() {
     useEffect(() => {
         console.log("called");
         getData();
-    }, [refreshed])
+    }, [])
 
     return {
         user,
-        setRefreshed,
         errMessage,
-        loading
+        loading,
+        getData
     }
 }

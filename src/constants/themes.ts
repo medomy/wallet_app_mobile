@@ -40,7 +40,7 @@ export const SIZES = {
     body3: 16,
     body4: 14,
     body5: 12,
-    radius: 30,
+    radius: 50,
     radius2: 15,
     bigRadius: 60,
     btnRadius: 8
