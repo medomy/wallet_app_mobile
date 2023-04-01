@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     screen: {
         width: SIZES.fullScreenWidth,
         height: SIZES.fullScreenHeight,
-        opacity: 0.5,
+        opacity: 1,
         backgroundColor: COLORS.primary,
         position: "absolute",
         top: 0,

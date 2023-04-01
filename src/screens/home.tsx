@@ -12,7 +12,7 @@ import { useIsFocused, useRoute } from '@react-navigation/native'
 const HomeScreen = () => {
     const { user, getData, loading, errMessage } = useFetchUserData();
     const [refresh, setRefresh] = useState<boolean>(false);
-    const { transactedUsers, transactions } = useFetchTransactedUsers(user);
+    const { transactedUsers, transactions, loading2 } = useFetchTransactedUsers(user);
     const focused = useIsFocused();
     const onRefresh = async () => {
         await getData();
@@ -26,8 +26,7 @@ const HomeScreen = () => {
     return (
         <>
             <StatusBar backgroundColor={COLORS.tintColor} />
-            {loading && <LoaderComponent />}
-            {!loading &&
+            {loading || loading2 ? <LoaderComponent /> :
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     style={styles.screen}
@@ -35,7 +34,8 @@ const HomeScreen = () => {
                     {user && <InfoPart user={user} />}
                     {transactedUsers.length > 0 && <QuickSendList users={transactedUsers} />}
                     <TransactionsSec transactions={transactions} />
-                </ScrollView>}
+                </ScrollView>
+            }
         </>
     )
 }

@@ -55,7 +55,7 @@ class UserService {
                     Authorization: `bearer ${token}`
                 }
             });
-            console.log(Transres.data);
+            //console.log(Transres.data);
             if (Transres.data.error) throw new Error(Transres.data.error);
             let transectedUsers: MobileNumUser[] = [];
             for (let i = 0; i < Transres.data.length; i++) {

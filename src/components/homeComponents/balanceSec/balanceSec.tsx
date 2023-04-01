@@ -13,7 +13,7 @@ const BalanceSec = ({ balance }: props) => {
         <View style={styles.container}>
             <View style={commonStyles.row}>
                 <Text style={[styles.txt, commonStyles.opacityShown]}>
-                    yor total balance,
+                    your total balance,
                 </Text>
                 <TouchableOpacity onPress={() => setShowBalance((prev) => !prev)}>
                     {showBalance ?
